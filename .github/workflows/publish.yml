@@ -43,7 +43,9 @@ on:
         - Neoforge 1.20.6
         - Neoforge 1.21
         - Neoforge 1.21.2
+        - Neoforge 26.2
         - Spigot 1.21
+        - Spigot 26.2
 
 
 jobs:
@@ -791,12 +793,40 @@ jobs:
         version-type: release
         loaders: |
             neoforge
-        game-versions: |    
+        game-versions: |
             1.21.2
             1.21.3
             1.21.4
         java: |
             Java 21
+        changelog: ${{ vars.CHANGELOG }}
+
+
+    - name:  Upload Neoforge 26.2
+
+      if: inputs.version == 'Neoforge 26.2' || inputs.version == 'All'
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        #CF specific
+        curseforge-id: 876284
+        curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+        #MR specific
+        modrinth-id: Jrmoreqs
+        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+        #Modrinth's auto-feature works nicely, so we're going to keep using it.
+        modrinth-featured: false
+        #General
+        files: |
+            **/AdvancedBackups-neoforge-26.2-${{ steps.version.outputs.VERSION }}.jar
+        name: Neoforge 26.2 - ${{ steps.version.outputs.VERSION }}
+        version: ${{ steps.version.outputs.VERSION }}
+        version-type: release
+        loaders: |
+            neoforge
+        game-versions: |
+            26.2
+        java: |
+            Java 25
         changelog: ${{ vars.CHANGELOG }}
 
 
@@ -826,5 +856,34 @@ jobs:
             [1.21,1.21.1]
         java: |
             Java 21
+        changelog: ${{ vars.CHANGELOG }}
+
+
+    - name:  Upload Spigot 26.2
+
+      if: inputs.version == 'Spigot 26.2' || inputs.version == 'All'
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        #CF specific
+        curseforge-id: 876284
+        curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+        #MR specific
+        modrinth-id: Jrmoreqs
+        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+        #Modrinth's auto-feature works nicely, so we're going to keep using it.
+        modrinth-featured: false
+        #General
+        files: |
+            **/AdvancedBackups-spigot-26.2-${{ steps.version.outputs.VERSION }}.jar
+        name: Spigot 26.2 - ${{ steps.version.outputs.VERSION }}
+        version: ${{ steps.version.outputs.VERSION }}
+        version-type: release
+        loaders: |
+            spigot
+            paper
+        game-versions: |
+            26.2
+        java: |
+            Java 25
         changelog: ${{ vars.CHANGELOG }}
 
